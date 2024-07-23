@@ -11,8 +11,8 @@ const Navbar: React.FC = () => {
             <div className='navbar-start'>
 
             </div>
-            <div className='text-xl navbar-center'>
-                <h1 className="text-center" id='navbar-title'>Peony Sessions</h1>
+            <div className='text-2xl navbar-center'>
+                <h1 className="text-center text-neutral-content" id='navbar-title'>Peony Sessions</h1>
             </div>
             <div className='navbar-end'>
             <select name = "theme" defaultValue = {changeTheme} onChange={e => changeTheme(e.target.value)} className="dropdown-content menu bg-base-100 rounded-box z-[1] w-52 p-2 shadow">

@@ -2,26 +2,29 @@
 
 import { useContext } from "react"
 import { ThemeContext } from "./ThemeContext"
-import { Inter, Yatra_One } from "next/font/google";
+import { Harmattan, Aleo} from "next/font/google";
 
-const inter = Inter({
-    subsets: ['latin'],
-    display: 'swap',
-    variable: '--font-inter',
-})
-
-const yatra = Yatra_One({
+const bodytxt = Harmattan({
     weight: '400',
     subsets: ['latin'],
     display: 'swap',
-    variable: '--font-yatra',
+    variable: '--font-body',
+})
+
+const titletxt = Aleo({
+    weight: '700',
+    subsets: ['latin'],
+    display: 'swap',
+    variable: '--font-title',
 })
 export default function ClientThemeWrapper({children}: any){
     const {theme} = useContext(ThemeContext);
 
-    return <html data-theme={theme} className={`${inter.variable} ${yatra.variable} font-sans`}>
-        <body>
-        {children}
-        </body>
+    return (
+        <html data-theme={theme} className={`${bodytxt.variable} ${titletxt.variable} font-sans`}>
+            <body>
+            {children}
+            </body>
         </html>
+    )
 }

@@ -3,6 +3,13 @@
 @tailwind utilities;
 
 #navbar-title{
-  font-family: var(--font-yatra);
-  color: rgb(255, 234, 250);
+  font-family: var(--font-title);
+}
+
+body{
+  font-family: var(--font-body);
+}
+
+.plus-icon{
+  size: 2;
 }

@@ -21,6 +21,7 @@ export default function RootLayout({
     <ThemeProvider>
       <ClientThemeWrapper>
         <Navbar />
+        <br></br>
         {children}
       </ClientThemeWrapper>
     </ThemeProvider>
