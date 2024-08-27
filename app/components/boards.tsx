@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import { useLiveQuery } from 'dexie-react-hooks';
 import { db, Board } from '../db';
-
+import { LoadTasks } from './tasks';
 interface LoadBoardsProps {
     isAdding: boolean;
     setIsAdding: (isAdding: boolean) => void;
@@ -38,8 +38,8 @@ export function LoadBoards({ isAdding, setIsAdding }: LoadBoardsProps) {
     return (
         <>
             {boards?.map((board) => (
-                <div className="card card-compact w-96 shadow-xl" key={board.id}>
-                    <div className="card-body">
+                <div className="card card-normal w-96 shadow-xl bg-base" key={board.id}>
+                    <div className="card-body flex-col">
                         {editableBoardId === board.id ? (
                             <input
                                 type="text"
@@ -50,13 +50,16 @@ export function LoadBoards({ isAdding, setIsAdding }: LoadBoardsProps) {
                                 autoFocus
                             />
                         ) : (
-                            <h2 className="card-title text-xl" onClick={() => {
+                            <h2 className="card-title text-2xl" onClick={() => {
                                 setEditableBoardId(board.id);
                                 setInputValue(board.name);
                             }}>
                                 {board.name || 'New Board'}
                             </h2>
                         )}
+                        <div>
+                            <LoadTasks board_ID = {board.id}/>
+                        </div>
                     </div>
                 </div>
             ))}

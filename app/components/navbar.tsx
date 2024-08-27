@@ -7,7 +7,7 @@ const Navbar: React.FC = () => {
 
 
     return (
-        <div className="navbar bg-neutral flex justify-between p-3">
+        <div className="navbar bg-primary flex justify-between p-3">
             <div className='navbar-start'>
 
             </div>
@@ -16,8 +16,8 @@ const Navbar: React.FC = () => {
             </div>
             <div className='navbar-end'>
             <select name = "theme" defaultValue = {changeTheme} onChange={e => changeTheme(e.target.value)} className="dropdown-content menu bg-base-100 rounded-box z-[1] w-52 p-2 shadow">
-                <option value="valentine">Valentine</option>
-                <option value="dracula">Dracula</option>
+                <option value="retro">Retro</option>
+                <option value="coffee">Coffee</option>
                 <option value="pastel">Pastel</option>
             </select>
             </div>

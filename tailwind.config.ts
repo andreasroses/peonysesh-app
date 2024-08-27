@@ -14,7 +14,7 @@ const config: Config = {
   },
   plugins: [require('daisyui')],
   daisyui: {
-    themes: ["pastel","valentine","dracula"],
+    themes: ["retro","coffee","pastel"],
   }
   
 };

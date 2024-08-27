@@ -2,7 +2,7 @@
 import { useState } from 'react';
 import { CiCirclePlus } from 'react-icons/ci';
 import { IconContext } from 'react-icons';
-import { LoadBoards } from './components/boardtasks';
+import { LoadBoards } from './components/boards';
 import { db, Board } from './db';
 
 export default function Home() {
@@ -19,7 +19,7 @@ export default function Home() {
       <div className="flex columns-2 gap-2 mx-2">
         <div className='flex gap-2'>
           <LoadBoards isAdding={isAdding} setIsAdding={setIsAdding} />
-          <button className="btn btn-neutral flex" onClick={addNewBoard}>
+          <button className="btn btn-secondary flex" onClick={addNewBoard}>
             <IconContext.Provider value={{ size: '30' }}>
               <CiCirclePlus />
             </IconContext.Provider>
