@@ -38,7 +38,7 @@ export function LoadBoards({ isAdding, setIsAdding }: LoadBoardsProps) {
     return (
         <>
             {boards?.map((board) => (
-                <div className="card card-normal w-96 shadow-xl bg-base" key={board.id}>
+                <div className="card card-normal w-96 shadow-md bg-base" key={board.id}>
                     <div className="card-body flex-col">
                         {editableBoardId === board.id ? (
                             <input

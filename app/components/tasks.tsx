@@ -40,6 +40,10 @@ export function LoadTasks({ board_ID }: LoadTasksProps){
         await db.tasks.add(newTask);
         setIsAdding(true);
     };
+
+    const checkedBox = async(task_id:number) =>{
+        await db.tasks.delete(task_id);
+    }
     return (
         <>
             {tasks?.map((task) => (
@@ -63,7 +67,7 @@ export function LoadTasks({ board_ID }: LoadTasksProps){
                                 {task.title || 'New task'}
                             </h2>
                         )}
-                        <input type="checkbox" className="checkbox" />
+                        <input type="checkbox" className="checkbox" onClick = {() => {checkedBox(task.id)}}/>
                     </div>
                 </div>
             ))}

@@ -17,7 +17,7 @@ export default function Home() {
   return (
     <main>
       <div className="flex columns-2 gap-2 mx-2">
-        <div className='flex gap-2'>
+        <div className=' grid grid-cols-2 grid-rows-auto gap-2 space-y-3'>
           <LoadBoards isAdding={isAdding} setIsAdding={setIsAdding} />
           <button className="btn btn-secondary flex" onClick={addNewBoard}>
             <IconContext.Provider value={{ size: '30' }}>
@@ -26,7 +26,8 @@ export default function Home() {
             <p className="text-lg">Add new board</p>
           </button>
         </div>
-        <div>
+        <div className='flex-grow'>
+          pomodoro timer here
         </div>
       </div>
     </main>
