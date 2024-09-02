@@ -16,7 +16,7 @@ export default function Home() {
 
   return (
     <main>
-      <div className="flex columns-2 gap-2 mx-2">
+      <div className="flex columns-2 gap-2 mx-2 space-x-20">
         <div className=' grid grid-cols-2 grid-rows-auto gap-2 space-y-3'>
           <LoadBoards isAdding={isAdding} setIsAdding={setIsAdding} />
           <button className="btn btn-secondary flex" onClick={addNewBoard}>
@@ -26,8 +26,10 @@ export default function Home() {
             <p className="text-lg">Add new board</p>
           </button>
         </div>
-        <div className='flex-grow'>
-          pomodoro timer here
+        <div className='flex-grow py-5'>
+          <div className="radial-progress text-primary" style={{ "--value": 70 }} role="progressbar">
+            70%
+          </div>
         </div>
       </div>
     </main>
