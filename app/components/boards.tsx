@@ -50,7 +50,7 @@ export function LoadBoards({ isAdding, setIsAdding }: LoadBoardsProps) {
                                 autoFocus
                             />
                         ) : (
-                            <h2 className="card-title text-2xl" onClick={() => {
+                            <h2 className="card-title text-3xl" onClick={() => {
                                 setEditableBoardId(board.id);
                                 setInputValue(board.name);
                             }}>

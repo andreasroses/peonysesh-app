@@ -60,7 +60,7 @@ export function LoadTasks({ board_ID }: LoadTasksProps){
                                 className="flex-grow mr-2"
                             />
                         ) : (
-                            <h2 className="font-semibold text-base m-1 flex-grow" onClick={() => {
+                            <h2 className="font-semibold m-1 flex-grow text-lg" onClick={() => {
                                 setEditableTaskId(task.id);
                                 setInputValue(task.title);
                             }}>
@@ -75,7 +75,7 @@ export function LoadTasks({ board_ID }: LoadTasksProps){
                 <IconContext.Provider value={{ size: '20' }}>
                     <CiCirclePlus />
                 </IconContext.Provider>
-                <p className="text-lg ml-2">Add new task</p>
+                <p className="text-lg">Add new task</p>
             </button>
         </>
     );
