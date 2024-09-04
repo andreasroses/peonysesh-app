@@ -17,7 +17,7 @@ export default function Home() {
 
   return (
     <main>
-      <div className="flex columns-2 gap-2 mx-10 space-x-20">
+      <div className="flex columns-2 gap-2 mx-10 space-x-20 justify-center">
         <div className=' grid grid-cols-2 grid-rows-auto gap-2 space-y-3'>
           <LoadBoards isAdding={isAdding} setIsAdding={setIsAdding} />
           <button className="btn btn-secondary flex" onClick={addNewBoard}>
@@ -27,7 +27,7 @@ export default function Home() {
             <p className="text-xl">Add new board</p>
           </button>
         </div>
-        <div className='py-5 flex flex-col flex-grow items-center'>
+        <div className='py-5 flex flex-col flex-grow items-center space-y-2'>
           <PomodoroTimer/>
         </div>
       </div>
