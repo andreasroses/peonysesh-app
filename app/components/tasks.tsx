@@ -1,8 +1,9 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useCallback } from 'react';
 import { useLiveQuery } from 'dexie-react-hooks';
 import { db, Task } from '../db';
 import { CiCirclePlus } from 'react-icons/ci';
 import { IconContext } from 'react-icons';
+import useSound from 'use-sound';
 
 interface LoadTasksProps {
     board_ID: number
@@ -12,7 +13,7 @@ export function LoadTasks({ board_ID }: LoadTasksProps) {
     const [editableTaskId, setEditableTaskId] = useState<number | null>(null);
     const [inputValue, setInputValue] = useState<string>('');
     const [isAdding, setIsAdding] = useState(false);
-
+    const [playTaskOver] = useSound('./sounds/task-done.mp3', { volume: 0.75 });
     useEffect(() => {
         if (isAdding && tasks && tasks.length > 0) {
             const newTask = tasks[tasks.length - 1];
@@ -21,6 +22,10 @@ export function LoadTasks({ board_ID }: LoadTasksProps) {
             setIsAdding(false);
         }
     }, [isAdding, tasks, setIsAdding]);
+
+    const taskOver = useCallback(() => {
+        playTaskOver();
+    }, [playTaskOver]);
 
     const handleNameChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         setInputValue(e.target.value);
@@ -43,6 +48,7 @@ export function LoadTasks({ board_ID }: LoadTasksProps) {
 
     const checkedBox = async (task_id: number) => {
         await db.tasks.delete(task_id);
+        taskOver();
     }
     return (
         <>
