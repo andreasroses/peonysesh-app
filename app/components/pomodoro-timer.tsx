@@ -84,15 +84,15 @@ export function PomodoroTimer() {
             timer = setInterval(() => {
                 setSeconds((prevSeconds) => {
                     if (prevSeconds === 0) {
-                        if (minutes <= 0) {
-                            resetTimer();
-                            timeUp();
-                            return 0;
-                        }
-                        else {
-                            setMinutes((prevMinutes) => prevMinutes - 1);
-                            return 59;
-                        }
+                        setMinutes((prevMinutes) => {
+                            if (prevMinutes <= 0) {
+                                resetTimer();
+                                timeUp();
+                                return 0;
+                            }
+                            return prevMinutes - 1;
+                        });
+                        return 59;
                     }
                     return prevSeconds - 1;
                 });
