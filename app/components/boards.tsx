@@ -2,9 +2,8 @@ import { useState, useEffect } from 'react';
 import { useLiveQuery } from 'dexie-react-hooks';
 import { db, Board } from '../db';
 import { LoadTasks } from './tasks';
-import { CiCirclePlus } from 'react-icons/ci';
 import { IconContext } from 'react-icons';
-
+import { FaRegTrashAlt } from "react-icons/fa";
 interface LoadBoardsProps {
     isAdding: boolean;
     setIsAdding: (isAdding: boolean) => void;
@@ -37,7 +36,7 @@ export function LoadBoards({ isAdding, setIsAdding }: LoadBoardsProps) {
             e.currentTarget.blur();
         }
     };
-    const deleteBoard = async(board_id:number) =>{
+    const deleteBoard = async (board_id: number) => {
         await db.tasks.where('boardID').equals(board_id).delete();
         await db.boards.delete(board_id);
     }
@@ -66,13 +65,22 @@ export function LoadBoards({ isAdding, setIsAdding }: LoadBoardsProps) {
                         )}
                         <div>
                             <LoadTasks board_ID={board.id} />
-                            <button className="btn btn-sm btn-neutral justify-center mt-4" onClick={() =>deleteBoard(board.id)}>
-                            <IconContext.Provider value={{ size: '20' }}>
-                                <CiCirclePlus />
-                            </IconContext.Provider>
-                            <p className="text-lg">Delete board</p>
-                        </button>
+                            <div>
+                                <button className="btn btn-sm btn-neutral mt-4" onClick={() => deleteBoard(board.id)}>
+                                    <div className='flex flex-initial items-center gap-2'>
+                                        <div className='pb-0.5'>
+                                            <IconContext.Provider value={{ size: '15', style: { verticalAlign: 'text-top' } }}>
+                                                <FaRegTrashAlt />
+                                            </IconContext.Provider>
+                                        </div>
+                                        <div className='flex gap-1.5 pt-0.5'>
+                                            <p className="text-lg">Delete board</p>
+                                        </div>
+                                    </div>
+                                </button>
+                            </div>
                         </div>
+
                     </div>
                 </div>
             ))}

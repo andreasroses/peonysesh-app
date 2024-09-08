@@ -149,7 +149,7 @@ export function PomodoroTimer() {
                     </label>
                     <input type="text" placeholder="mm:ss" className="input input-bordered max-w-20 placeholder: text-center" value={timeInput} onChange={handleInputChange} />
                     <button className={`btn btn-sm btn-${timerColor} justify-center mt-1.5`} onClick={startTimer}>
-                        <p className={`text-lg`}>Start</p>
+                        <p className={`text-lg py-0.5`}>Start</p>
                     </button>
 
                 </div>
@@ -157,10 +157,10 @@ export function PomodoroTimer() {
             ) : (
                 <div className='flex flex-col'>
                     <button className={`btn btn-sm btn-${timerColor} justify-center mt-4`} onClick={pauseTimer}>
-                        <p className='text-lg'>Pause</p>
+                        <p className='text-lg py-0.5'>Pause</p>
                     </button>
                     <button className={`btn btn-sm btn-${timerColor} justify-center mt-4`} onClick={resetTimer}>
-                        <p className='text-lg'>Stop</p>
+                        <p className='text-lg py-0.5'>Stop</p>
                     </button>
                 </div>
             )}

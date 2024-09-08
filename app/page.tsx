@@ -21,10 +21,16 @@ export default function Home() {
         <div className=' grid grid-cols-2 grid-rows-auto gap-2 space-y-3'>
           <LoadBoards isAdding={isAdding} setIsAdding={setIsAdding} />
           <button className="btn btn-secondary flex" onClick={addNewBoard}>
-            <IconContext.Provider value={{ size: '30' }}>
-              <CiCirclePlus />
-            </IconContext.Provider>
-            <p className="text-xl">Add new board</p>
+            <div className='flex flex-wrap items-center justify-center content-center gap-2'>
+              <div className='pb-0.5'>
+                <IconContext.Provider value={{ size: '30', style: { verticalAlign: 'text-top' } }}>
+                  <CiCirclePlus />
+                </IconContext.Provider>
+              </div>
+              <div className='flex gap-1.5 pt-0.5'>
+                <p className="text-xl">Add new board</p>
+              </div>
+            </div>
           </button>
         </div>
         <div className='py-5 flex flex-col flex-grow items-center space-y-2'>

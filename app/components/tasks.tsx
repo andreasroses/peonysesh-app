@@ -4,10 +4,10 @@ import { db, Task } from '../db';
 import { CiCirclePlus } from 'react-icons/ci';
 import { IconContext } from 'react-icons';
 
-interface LoadTasksProps{
+interface LoadTasksProps {
     board_ID: number
 }
-export function LoadTasks({ board_ID }: LoadTasksProps){
+export function LoadTasks({ board_ID }: LoadTasksProps) {
     const tasks = useLiveQuery(() => db.tasks.where('boardID').equals(board_ID).toArray(), [board_ID]);
     const [editableTaskId, setEditableTaskId] = useState<number | null>(null);
     const [inputValue, setInputValue] = useState<string>('');
@@ -36,12 +36,12 @@ export function LoadTasks({ board_ID }: LoadTasksProps){
         }
     };
     const addNewTask = async () => {
-        const newTask: Omit<Task, 'id'> = { title: '', boardID:  board_ID}; // Omit the id since it's auto-generated
+        const newTask: Omit<Task, 'id'> = { title: '', boardID: board_ID }; // Omit the id since it's auto-generated
         await db.tasks.add(newTask);
         setIsAdding(true);
     };
 
-    const checkedBox = async(task_id:number) =>{
+    const checkedBox = async (task_id: number) => {
         await db.tasks.delete(task_id);
     }
     return (
@@ -67,15 +67,21 @@ export function LoadTasks({ board_ID }: LoadTasksProps){
                                 {task.title || 'New task'}
                             </h2>
                         )}
-                        <input type="checkbox" className="checkbox" onClick = {() => {checkedBox(task.id)}}/>
+                        <input type="checkbox" className="checkbox" onClick={() => { checkedBox(task.id) }} />
                     </div>
                 </div>
             ))}
-            <button className="btn btn-sm btn-neutral flex justify-center mt-4" onClick={addNewTask}>
-                <IconContext.Provider value={{ size: '20' }}>
-                    <CiCirclePlus />
-                </IconContext.Provider>
-                <p className="text-lg">Add new task</p>
+            <button className="btn btn-sm btn-neutral mt-4" onClick={addNewTask}>
+                <div className='flex flex-initial items-center gap-1.5'>
+                    <div className='pb-0.5'>
+                    <IconContext.Provider value={{ size: '23', style: { verticalAlign: '20px' } }}>
+                        <CiCirclePlus />
+                    </IconContext.Provider>
+                    </div>
+                    <div className='flex gap-1.5 pt-0.5'>
+                        <p className="text-lg">Add new task</p>
+                    </div>
+                </div>
             </button>
         </>
     );
