@@ -18,7 +18,7 @@ const titletxt = Aleo({
     variable: '--font-title',
 })
 export default function ClientThemeWrapper({children}: any){
-    const {theme} = useContext(ThemeContext);
+    const {theme}:any = useContext(ThemeContext);
 
     return (
         <html data-theme={theme} className={`${bodytxt.variable} ${titletxt.variable} font-sans`}>

@@ -3,7 +3,7 @@ import React, { useContext } from 'react';
 import { ThemeContext } from '../contexts/ThemeContext';
 
 const Navbar: React.FC = () => {
-    const {changeTheme} = useContext(ThemeContext);
+    const {changeTheme}:any = useContext(ThemeContext);
 
 
     return (

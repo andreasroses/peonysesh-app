@@ -1,7 +1,7 @@
 'use client'
 import React, { createContext, useState, useEffect } from 'react';
 
-export const ThemeContext = createContext();
+export const ThemeContext:any = createContext<typeof ThemeContext>({} as typeof ThemeContext)
 
 export const ThemeProvider = ({children}: any) => {
     const [theme, setTheme] = useState('retro');
