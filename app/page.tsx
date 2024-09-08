@@ -28,6 +28,7 @@ export default function Home() {
           </button>
         </div>
         <div className='py-5 flex flex-col flex-grow items-center space-y-2'>
+          <h1 className='text-4xl font-bold'>Timer</h1>
           <PomodoroTimer/>
         </div>
       </div>

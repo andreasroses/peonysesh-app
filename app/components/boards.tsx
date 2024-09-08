@@ -2,6 +2,9 @@ import { useState, useEffect } from 'react';
 import { useLiveQuery } from 'dexie-react-hooks';
 import { db, Board } from '../db';
 import { LoadTasks } from './tasks';
+import { CiCirclePlus } from 'react-icons/ci';
+import { IconContext } from 'react-icons';
+
 interface LoadBoardsProps {
     isAdding: boolean;
     setIsAdding: (isAdding: boolean) => void;
@@ -34,6 +37,10 @@ export function LoadBoards({ isAdding, setIsAdding }: LoadBoardsProps) {
             e.currentTarget.blur();
         }
     };
+    const deleteBoard = async(board_id:number) =>{
+        await db.tasks.where('boardID').equals(board_id).delete();
+        await db.boards.delete(board_id);
+    }
 
     return (
         <>
@@ -58,7 +65,13 @@ export function LoadBoards({ isAdding, setIsAdding }: LoadBoardsProps) {
                             </h2>
                         )}
                         <div>
-                            <LoadTasks board_ID = {board.id}/>
+                            <LoadTasks board_ID={board.id} />
+                            <button className="btn btn-sm btn-neutral justify-center mt-4" onClick={() =>deleteBoard(board.id)}>
+                            <IconContext.Provider value={{ size: '20' }}>
+                                <CiCirclePlus />
+                            </IconContext.Provider>
+                            <p className="text-lg">Delete board</p>
+                        </button>
                         </div>
                     </div>
                 </div>

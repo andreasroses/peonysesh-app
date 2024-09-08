@@ -9,7 +9,7 @@ import ClientThemeWrapper from "./contexts/ClientThemeWrapper";
 
 export const metadata: Metadata = {
   title: "Peony Sessions",
-  description: "To-do boards with pomodoro timer for a nice work session",
+  description: "To-do boards with pomodoro timer for an easy work session",
 };
 
 export default function RootLayout({
