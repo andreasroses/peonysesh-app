@@ -15,11 +15,11 @@ export function PomodoroTimer() {
     const [pomoMode, setPomoMode] = useState(true);
     const [timerColor, setTimerColor] = useState('primary');
     const switchTimerMode = () => {
-        setPomoMode((currPomo) =>{
-            if(currPomo){
+        setPomoMode((currPomo) => {
+            if (currPomo) {
                 setTimeInput("15:00");
             }
-            else{
+            else {
                 setTimeInput("25:00");
             }
             return !currPomo;
@@ -134,8 +134,13 @@ export function PomodoroTimer() {
                     {minutes !== 0 || seconds !== 0 ? (
                         <h2 className={`text-2xl font-semibold text-${timerColor}`}> {minutes} : {seconds < 10 ? '0' + seconds : seconds} </h2>
                     ) : (
-                        <p className={`text-2xl font-semibold text-${timerColor}`}>Set the timer</p>
-                    )}
+                        pomoMode ? (
+                            <p className={`text-2xl font-semibold text-${timerColor}`}>Set timer for work session</p>)
+                            : (
+                                <p className={`text-2xl font-semibold text-${timerColor}`}>Set timer for break</p>
+                            )
+                    )
+                    }
                 </div>
             </div>
             {tick === false ? (
