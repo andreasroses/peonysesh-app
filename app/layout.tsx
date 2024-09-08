@@ -37,7 +37,7 @@ export default function RootLayout({
         <ThemeProvider>
           <ClientThemeWrapper>
             <Navbar />
-            {/* <br></br> */}
+            <br></br>
             <div className="flex-grow">
               {children}
             </div>
