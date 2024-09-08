@@ -33,12 +33,19 @@ export default function RootLayout({
 }>) {
   return (
     <html className={`${bodytxt.variable} ${titletxt.variable} font-sans`}>
-      <body>
+      <body className="relative min-h-screen flex flex-col">
         <ThemeProvider>
           <ClientThemeWrapper>
             <Navbar />
-            <br></br>
-            {children}
+            {/* <br></br> */}
+            <div className="flex-grow">
+              {children}
+            </div>
+            <footer className="w-full absolute bottom-0 text-center">
+              <div className="my-4 text-center">
+                <a className="text-base-content underline" href="https://www.vecteezy.com/members/elsabenaa620570">Page icon by Vecteezy</a>
+              </div>
+            </footer>
           </ClientThemeWrapper>
         </ThemeProvider>
       </body>
