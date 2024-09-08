@@ -38,7 +38,7 @@ export function PomodoroTimer() {
 
     const pauseTimer = () => {
         setTick(false);
-        setTimeInput(minutes+":"+seconds);
+        setTimeInput(minutes+":"+(seconds < 10 ? '0' + seconds : seconds));
     };
 
     const resetTimer = () => {
