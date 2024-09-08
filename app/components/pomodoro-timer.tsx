@@ -90,7 +90,7 @@ export function PomodoroTimer() {
                             return 0;
                         }
                         else {
-                            setMinutes((prevMinutes) => prevMinutes - 0.5);
+                            setMinutes((prevMinutes) => prevMinutes - 1);
                             return 59;
                         }
                     }
