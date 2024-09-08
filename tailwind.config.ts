@@ -1,4 +1,5 @@
 import type { Config } from "tailwindcss";
+
 const config: Config = {
   content: [
     "./pages/**/*.{js,ts,jsx,tsx,mdx}",
@@ -14,8 +15,16 @@ const config: Config = {
   },
   plugins: [require('daisyui')],
   daisyui: {
-    themes: ["retro","coffee","pastel"],
-  }
-  
+    themes: ["retro", "coffee", "pastel"],
+  },
+  safelist: [
+    {
+      pattern: /^text-(primary|secondary|accent|neutral|info|success|warning|error)$/, 
+      variants: ['hover', 'focus'], // Add variants if necessary
+    },
+    {
+      pattern: /^btn-(primary|secondary|accent|neutral|info|success|warning|error)$/,
+    }
+  ]
 };
 export default config;
