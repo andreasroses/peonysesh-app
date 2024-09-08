@@ -5,7 +5,7 @@ interface ThemeContextType {
     theme: string;
     changeTheme: (theme: string) => void;
 }
-export const ThemeContext = createContext<ThemeContextType | undefined>(undefined);
+export const ThemeContext:any = createContext<ThemeContextType | undefined>(undefined);
 
 export const ThemeProvider = ({children}: any) => {
     const [theme, setTheme] = useState('retro');

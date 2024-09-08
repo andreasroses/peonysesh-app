@@ -16,6 +16,7 @@ export default function Home() {
   };
 
   return (
+    <main>
       <div className="flex columns-2 gap-2 mx-10 space-x-20 justify-center">
         <div className=' grid grid-cols-2 grid-rows-auto gap-2 space-y-3'>
           <LoadBoards isAdding={isAdding} setIsAdding={setIsAdding} />
@@ -31,5 +32,6 @@ export default function Home() {
           <PomodoroTimer/>
         </div>
       </div>
+    </main>
   );
 }

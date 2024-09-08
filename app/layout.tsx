@@ -3,7 +3,21 @@ import "./globals.css";
 import { ThemeProvider } from './contexts/ThemeContext';
 import Navbar from "./components/navbar";
 import ClientThemeWrapper from "./contexts/ClientThemeWrapper";
+import { Harmattan, Aleo } from "next/font/google";
 
+const bodytxt = Harmattan({
+  weight: '400',
+  subsets: ['latin'],
+  display: 'swap',
+  variable: '--font-body',
+})
+
+const titletxt = Aleo({
+  weight: '700',
+  subsets: ['latin'],
+  display: 'swap',
+  variable: '--font-title',
+})
 
 
 
@@ -18,12 +32,16 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <ThemeProvider>
-      <ClientThemeWrapper>
-        <Navbar />
-        <br></br>
-        {children}
-      </ClientThemeWrapper>
-    </ThemeProvider>
+    <html className={`${bodytxt.variable} ${titletxt.variable} font-sans`}>
+      <body>
+        <ThemeProvider>
+          <ClientThemeWrapper>
+            <Navbar />
+            <br></br>
+            {children}
+          </ClientThemeWrapper>
+        </ThemeProvider>
+      </body>
+    </html>
   );
 }
