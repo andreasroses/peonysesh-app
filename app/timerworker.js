@@ -3,7 +3,6 @@ let remainingTime = 0;
 
 self.onmessage = (event) => {
     if (event.data.action === 'start') {
-        console.log('Received message:', event.data);
         remainingTime = event.data.duration;
         startTimer();
     } else if (event.data.action === 'pause') {
