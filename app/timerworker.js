@@ -3,6 +3,7 @@ let remainingTime = 0;
 
 self.onmessage = (event) => {
     if (event.data.action === 'start') {
+        console.log('Received message:', event.data);
         remainingTime = event.data.duration;
         startTimer();
     } else if (event.data.action === 'pause') {
@@ -10,6 +11,11 @@ self.onmessage = (event) => {
         self.postMessage({ remainingTime });
     } else if (event.data.action === 'resume') {
         startTimer();
+    }
+    else if (event.data.action === 'reset') {
+        clearInterval(intervalID);
+        remainingTime = 0; // Reset remaining time
+        self.postMessage({ reset: true }); // Send updated remaining time
     }
 };
 

@@ -14,7 +14,6 @@ export function PomodoroTimer() {
     const [paused, setPaused] = useState(false);
 
     const [timeInput, setTimeInput] = useState('25:00');
-    const [totalTime, setTotalTime] = useState<number>(0); // Total time in seconds
     
     const [playPomo] = useSound('./sounds/pomo-over.mp3', { volume: 0.75 });
     const [playBreak] = useSound('./sounds/break-over.mp3', { volume: 0.75 });
@@ -22,6 +21,7 @@ export function PomodoroTimer() {
     
     const [timerColor, setTimerColor] = useState('primary');
     const switchTimerMode = () => {
+        resetTimer();
         setPomoMode((currPomo) => {
             if (currPomo) {
                 setTimeInput("15:00");
@@ -64,7 +64,6 @@ export function PomodoroTimer() {
             setOriginalMin(newMin)
             setOriginalSec(newSec)
             const duration = (newMin * 60 + newSec);  // Total duration in ms
-            setTotalTime(duration);
 
             if (workerRef.current) {
                 workerRef.current.terminate(); // Clean up any existing worker
@@ -73,8 +72,9 @@ export function PomodoroTimer() {
             const worker = new Worker(new URL('../timerworker.js', import.meta.url));
             workerRef.current = worker;
 
-            worker.postMessage({ duration });
-            setTick(true);
+            worker.postMessage({ action: 'start', duration });
+            setMinutes(newMin)
+            setSeconds(newSec)
             worker.onmessage = (e) => {
                 if (e.data.done) {
                     resetTimer();
@@ -83,9 +83,16 @@ export function PomodoroTimer() {
                     const remainingSeconds = e.data.remainingTime;
                     setMinutes(Math.floor(remainingSeconds / 60));
                     setSeconds(remainingSeconds % 60);
-                    calcPercentage(remainingSeconds, totalTime); // Pass remaining and total seconds
+                    calcPercentage(remainingSeconds, duration);
+                }
+                else if(e.data.reset){
+                    setMinutes(0);
+                    setSeconds(0);
+                    return;
                 }
             };
+
+            setTick(true);
         }
 
     };
@@ -101,11 +108,15 @@ export function PomodoroTimer() {
     };
 
     const resetTimer = () => {
-        setTick(false);
-        setLastPercentage(100);
-        setTimeInput(originalMin + ":" + (originalSec < 10 ? '0' + originalSec : originalSec))
-        setOriginalMin(0);
-        setOriginalSec(0);
+        if (workerRef.current) {
+            workerRef.current.postMessage({ action: 'reset' });
+            setPaused(false);
+            setTick(false);
+            setLastPercentage(100);
+            setTimeInput(originalMin + ":" + (originalSec < 10 ? '0' + originalSec : originalSec));
+            setOriginalMin(0);
+            setOriginalSec(0);
+        }
     };
 
     const validateTime = () => {
@@ -169,7 +180,7 @@ export function PomodoroTimer() {
                 <div className='flex flex-col'>
                     <label className="swap swap-flip text-3xl mt-1.5">
                         {/* this hidden checkbox controls the state */}
-                        <input type="checkbox" checked={pomoMode} onClick={switchTimerMode} />
+                        <input type="checkbox" defaultChecked = {pomoMode} onClick={switchTimerMode} />
 
                         <div className="swap-on">📝</div>
                         <div className="swap-off">🤪</div>
