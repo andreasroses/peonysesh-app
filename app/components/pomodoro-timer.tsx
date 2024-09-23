@@ -2,19 +2,24 @@ import { useState, useEffect, useCallback, useRef } from 'react';
 import useSound from 'use-sound';
 
 export function PomodoroTimer() {
+    const workerRef = useRef<Worker | null>(null);
+    
     const [seconds, setSeconds] = useState(0);
     const [minutes, setMinutes] = useState(0);
     const [originalSec, setOriginalSec] = useState(0);
     const [originalMin, setOriginalMin] = useState(0);
-    const [percentage, setPercentage] = useState(100);
+    
     const [lastPercentage, setLastPercentage] = useState(100);
-    const [tick, setTick] = useState(false)
+    const [tick, setTick] = useState(false);
+    const [paused, setPaused] = useState(false);
+
     const [timeInput, setTimeInput] = useState('25:00');
-    const [startTime, setStartTime] = useState<number | null>(null); // For tracking the start time
     const [totalTime, setTotalTime] = useState<number>(0); // Total time in seconds
+    
     const [playPomo] = useSound('./sounds/pomo-over.mp3', { volume: 0.75 });
     const [playBreak] = useSound('./sounds/break-over.mp3', { volume: 0.75 });
     const [pomoMode, setPomoMode] = useState(true);
+    
     const [timerColor, setTimerColor] = useState('primary');
     const switchTimerMode = () => {
         setPomoMode((currPomo) => {
@@ -43,33 +48,64 @@ export function PomodoroTimer() {
 
 
     const startTimer = () => {
+        if(paused){
+            if (workerRef.current) {
+                workerRef.current.postMessage({ action: 'resume' });
+                setTick(true); // Update your local state
+                setPaused(false);
+                return;
+            }
+        }
         const [newMin, newSec] = validateTime();
         if (newMin === 0 && newSec === 0) {
             return;
-        } else {
-            setTick(true);
-            setMinutes(newMin);
-            setSeconds(newSec);
-            setStartTime(Date.now());
-            setTotalTime(newMin * 60 + newSec);
-            if (newMin !== minutes || newSec !== seconds) {
-                setOriginalMin(newMin);
-                setOriginalSec(newSec);
-            }
         }
+        else {
+            setOriginalMin(newMin)
+            setOriginalSec(newSec)
+            const duration = (newMin * 60 + newSec);  // Total duration in ms
+            setTotalTime(duration);
+
+            if (workerRef.current) {
+                workerRef.current.terminate(); // Clean up any existing worker
+            }
+
+            const worker = new Worker(new URL('../timerworker.js', import.meta.url));
+            workerRef.current = worker;
+
+            worker.postMessage({ duration });
+
+            worker.onmessage = (e) => {
+                if (e.data.done) {
+                    resetTimer();
+                    timeUp();
+                } else if (e.data.remainingTime !== undefined) {
+                    const remainingSeconds = e.data.remainingTime;
+                    setMinutes(Math.floor(remainingSeconds / 60));
+                    setSeconds(remainingSeconds % 60);
+                    calcPercentage(remainingSeconds, totalTime); // Pass remaining and total seconds
+                }
+            };
+
+            setTick(true);
+        }
+
     };
 
     const pauseTimer = () => {
-        setTick(false);
-        setTimeInput(minutes + ":" + (seconds < 10 ? '0' + seconds : seconds));
+        if (workerRef.current) {
+            workerRef.current.postMessage({ action: 'pause' });
+            setTick(false); // Update your local state
+            setPaused(true);
+            setTimeInput(minutes + ":" + (seconds < 10 ? '0' + seconds : seconds));
+        }
+        
     };
 
     const resetTimer = () => {
         setTick(false);
         setLastPercentage(100);
         setTimeInput(originalMin + ":" + (originalSec < 10 ? '0' + originalSec : originalSec))
-        setMinutes(originalMin);
-        setSeconds(originalSec);
         setOriginalMin(0);
         setOriginalSec(0);
     };
@@ -88,54 +124,36 @@ export function PomodoroTimer() {
         return [0, 0];
     }
 
-    const calcPercentage = useCallback(() => {
-        if (originalMin === 0 && originalSec === 0) {
+    const calcPercentage = useCallback((remainingTime: number, totalSec: number) => {
+        if (totalSec === 0) {
             return 100;
         }
-        const totalSec = originalSec + originalMin * 60;
-        const currSec = seconds + minutes * 60;
-        if (tick) {
-            const percentage = (currSec / totalSec) * 100;
-            setLastPercentage(percentage);
-            return percentage;
-        }
-        return lastPercentage;
-    }, [tick, originalSec, originalMin, seconds, minutes, lastPercentage]);
+        const percentage = (remainingTime / totalSec) * 100;
+        setLastPercentage(percentage);
+        return percentage;
+    }, []);
 
     useEffect(() => {
-        setPercentage(calcPercentage());
         setTimerColor((currColor) => {
             if (pomoMode) {
                 return "primary";
             }
             return "accent"
         });
-    })
+    },[pomoMode])
 
     useEffect(() => {
-        if (tick && startTime) {
-            const timer = setInterval(() => {
-                const now = Date.now();
-                const elapsed = Math.floor((now - startTime) / 1000);
-                const remainingTime = totalTime - elapsed;
+        return () => {
+            if (workerRef.current) {
+                workerRef.current.terminate(); // Terminate the worker on unmount
+            }
+        };
+    }, []);
 
-                if (remainingTime <= 0) {
-                    resetTimer();
-                    timeUp();
-                } else {
-                    setMinutes(Math.floor(remainingTime / 60));
-                    setSeconds(remainingTime % 60);
-                }
-            }, 1000);
-
-            return () => clearInterval(timer);
-        }
-
-    }, [tick])
 
     return (
         <>
-            <div className={`radial-progress text-${timerColor}`} style={{ "--value": percentage, "--size": "20rem", "--thickness": "10px" } as any} role="progressbar">
+            <div className={`radial-progress text-${timerColor}`} style={{ "--value": lastPercentage, "--size": "20rem", "--thickness": "10px" } as any} role="progressbar">
                 <div className='flex flex-col'>
                     {minutes !== 0 || seconds !== 0 ? (
                         <h2 className={`text-2xl font-semibold text-${timerColor}`}> {minutes} : {seconds < 10 ? '0' + seconds : seconds} </h2>
