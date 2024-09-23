@@ -10,6 +10,8 @@ export function PomodoroTimer() {
     const [lastPercentage, setLastPercentage] = useState(100);
     const [tick, setTick] = useState(false)
     const [timeInput, setTimeInput] = useState('25:00');
+    const [startTime, setStartTime] = useState<number | null>(null); // For tracking the start time
+    const [totalTime, setTotalTime] = useState<number>(0); // Total time in seconds
     const [playPomo] = useSound('./sounds/pomo-over.mp3', { volume: 0.75 });
     const [playBreak] = useSound('./sounds/break-over.mp3', { volume: 0.75 });
     const [pomoMode, setPomoMode] = useState(true);
@@ -48,6 +50,8 @@ export function PomodoroTimer() {
             setTick(true);
             setMinutes(newMin);
             setSeconds(newSec);
+            setStartTime(Date.now());
+            setTotalTime(newMin * 60 + newSec);
             if (newMin !== minutes || newSec !== seconds) {
                 setOriginalMin(newMin);
                 setOriginalSec(newSec);
@@ -84,14 +88,19 @@ export function PomodoroTimer() {
         return [0, 0];
     }
 
-    const calcPercentage = () => {
+    const calcPercentage = useCallback(() => {
+        if (originalMin === 0 && originalSec === 0) {
+            return 100;
+        }
+        const totalSec = originalSec + originalMin * 60;
+        const currSec = seconds + minutes * 60;
         if (tick) {
-            const totalSec = originalSec + (originalMin * 60);
-            const currSec = seconds + (minutes * 60);
-            setLastPercentage(currSec / totalSec * 100)
+            const percentage = (currSec / totalSec) * 100;
+            setLastPercentage(percentage);
+            return percentage;
         }
         return lastPercentage;
-    }
+    }, [tick, originalSec, originalMin, seconds, minutes, lastPercentage]);
 
     useEffect(() => {
         setPercentage(calcPercentage());
@@ -104,26 +113,23 @@ export function PomodoroTimer() {
     })
 
     useEffect(() => {
-        let timer: NodeJS.Timeout | undefined;
-        if (tick) {
-            timer = setInterval(() => {
-                setSeconds((prevSeconds) => {
-                    if (prevSeconds === 0) {
-                        setMinutes((prevMinutes) => {
-                            if (prevMinutes <= 0) {
-                                resetTimer();
-                                timeUp();
-                                return 0;
-                            }
-                            return prevMinutes - 1;
-                        });
-                        return 59;
-                    }
-                    return prevSeconds - 1;
-                });
+        if (tick && startTime) {
+            const timer = setInterval(() => {
+                const now = Date.now();
+                const elapsed = Math.floor((now - startTime) / 1000);
+                const remainingTime = totalTime - elapsed;
+
+                if (remainingTime <= 0) {
+                    resetTimer();
+                    timeUp();
+                } else {
+                    setMinutes(Math.floor(remainingTime / 60));
+                    setSeconds(remainingTime % 60);
+                }
             }, 1000);
+
+            return () => clearInterval(timer);
         }
-        return () => clearInterval(timer);
 
     }, [tick])
 
