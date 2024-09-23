@@ -6,19 +6,16 @@ export function PomodoroTimer() {
     
     const [seconds, setSeconds] = useState(0);
     const [minutes, setMinutes] = useState(0);
-    const [originalSec, setOriginalSec] = useState(0);
-    const [originalMin, setOriginalMin] = useState(0);
+    const [timeInput, setTimeInput] = useState('25:00');
     
     const [lastPercentage, setLastPercentage] = useState(100);
     const [tick, setTick] = useState(false);
     const [paused, setPaused] = useState(false);
 
-    const [timeInput, setTimeInput] = useState('25:00');
-    
     const [playPomo] = useSound('./sounds/pomo-over.mp3', { volume: 0.75 });
     const [playBreak] = useSound('./sounds/break-over.mp3', { volume: 0.75 });
-    const [pomoMode, setPomoMode] = useState(true);
     
+    const [pomoMode, setPomoMode] = useState(true);
     const [timerColor, setTimerColor] = useState('primary');
     const switchTimerMode = () => {
         resetTimer();
@@ -61,8 +58,9 @@ export function PomodoroTimer() {
             return;
         }
         else {
-            setOriginalMin(newMin)
-            setOriginalSec(newSec)
+            setTimeInput((prevInput) => {
+                return newMin + ":" + (newSec < 10 ? '0' + newSec : newSec);
+            });
             const duration = (newMin * 60 + newSec);  // Total duration in ms
 
             if (workerRef.current) {
@@ -113,9 +111,6 @@ export function PomodoroTimer() {
             setPaused(false);
             setTick(false);
             setLastPercentage(100);
-            setTimeInput(originalMin + ":" + (originalSec < 10 ? '0' + originalSec : originalSec));
-            setOriginalMin(0);
-            setOriginalSec(0);
         }
     };
 
