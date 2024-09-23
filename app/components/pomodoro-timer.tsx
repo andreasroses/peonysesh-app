@@ -74,7 +74,7 @@ export function PomodoroTimer() {
             workerRef.current = worker;
 
             worker.postMessage({ duration });
-
+            setTick(true);
             worker.onmessage = (e) => {
                 if (e.data.done) {
                     resetTimer();
@@ -86,8 +86,6 @@ export function PomodoroTimer() {
                     calcPercentage(remainingSeconds, totalTime); // Pass remaining and total seconds
                 }
             };
-
-            setTick(true);
         }
 
     };
