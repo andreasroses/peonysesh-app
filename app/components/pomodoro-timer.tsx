@@ -4,6 +4,8 @@ import useSound from 'use-sound';
 export function PomodoroTimer() {
     const workerRef = useRef<Worker | null>(null);
     
+    const [originalMin, setOriginalMin] = useState(0);
+    const [originalSec, setOriginalSec] = useState(0);
     const [seconds, setSeconds] = useState(0);
     const [minutes, setMinutes] = useState(0);
     const [timeInput, setTimeInput] = useState('25:00');
@@ -17,6 +19,7 @@ export function PomodoroTimer() {
     
     const [pomoMode, setPomoMode] = useState(true);
     const [timerColor, setTimerColor] = useState('primary');
+    
     const switchTimerMode = () => {
         resetTimer();
         setPomoMode((currPomo) => {
@@ -45,7 +48,8 @@ export function PomodoroTimer() {
 
 
     const startTimer = () => {
-        if(paused){
+        const [currMin, currSec] = timeInput.split(':').map(Number);
+        if(paused && currMin == minutes && currSec == seconds){
             if (workerRef.current) {
                 workerRef.current.postMessage({ action: 'resume' });
                 setTick(true); // Update your local state
@@ -58,6 +62,8 @@ export function PomodoroTimer() {
             return;
         }
         else {
+            setOriginalMin(newMin);
+            setOriginalSec(newSec);
             setTimeInput((prevInput) => {
                 return newMin + ":" + (newSec < 10 ? '0' + newSec : newSec);
             });
