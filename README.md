@@ -22,8 +22,8 @@ No installation needed! You can start using Peony Sessions right now at [peonyse
 3. Edit Board and Task Names: Change names anytime by clicking on them.
 4. Time Your Sessions: Use the Pomodoro timer to work in bursts and track your progress.
 
-## Screenshots
-ss.png
+## Preview
+![image_2024-09-28_113953952](https://github.com/user-attachments/assets/de6715a9-4c71-465c-90c5-6a23e4bed78c)
 
 ## Inspiration
 I named the app after peonies because I loved the visuals of Elina's home from Barbie’s Fairytopia in the field of peonies. Plus they're my favorite flower.
