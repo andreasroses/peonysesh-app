@@ -1,36 +1,29 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+## Peony Sessions
+Peony Sessions is a simple, lightweight productivity app built with Next.js that helps you organize tasks into boards and time your work using the Pomodoro technique. Think of it like a “Trello-lite” experience, designed specifically for productivity sessions.
 
-## Getting Started
+## Features
+- Boards and Tasks: Organize your work into boards and add tasks to each board. Check off tasks when complete.
+- Editable Task and Board Names: Easily rename tasks or boards to keep things flexible as your work evolves.
+- Pomodoro Timer: Stay focused with a built-in Pomodoro timer to work in timed sessions and break intervals.
+- Streamlined Workflow: Add a board, add tasks, check them off—repeat. No drag-and-drop, no due dates—just the essentials for productivity.
 
-First, run the development server:
+## Try It Out
+No installation needed! You can start using Peony Sessions right now at [peonysesh.co](https://www.peonysesh.co).
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+## Technologies Used
+- Next.js: For building a fast and scalable web app
+- Tailwind CSS: To keep styling efficient and streamlined
+- DaisyUI: For pre-built, accessible UI components
+- Dexie.js: An IndexedDB wrapper for storing tasks and boards offline
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## Usage
+1. Create a Board: Start by adding a new board.
+2. Add Tasks: Populate your board with tasks that you can check off as you go.
+3. Edit Board and Task Names: Change names anytime by clicking on them.
+4. Time Your Sessions: Use the Pomodoro timer to work in bursts and track your progress.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## Screenshots
+ss.png
 
-This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-optimization) to automatically optimize and load Inter, a custom Google Font.
-
-## Learn More
-
-To learn more about Next.js, take a look at the following resources:
-
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+## Inspiration
+I named the app after peonies because I loved the visuals of Elina's home from Barbie’s Fairytopia in the field of peonies. Plus they're my favorite flower.
