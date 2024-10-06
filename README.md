@@ -26,4 +26,4 @@ No installation needed! You can start using Peony Sessions right now at [peonyse
 ![image_2024-09-28_113953952](https://github.com/user-attachments/assets/de6715a9-4c71-465c-90c5-6a23e4bed78c)
 
 ## Inspiration
-I named the app after peonies because I loved the visuals of Elina's home from Barbie’s Fairytopia in the field of peonies. Plus they're my favorite flower.
+I named the app after peonies because I loved the visuals of the Barbie movies I watched in my childhood, and that was the aesthetic I was going for. Plus they're my favorite flower.
