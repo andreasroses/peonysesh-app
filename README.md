@@ -8,7 +8,7 @@ Peony Sessions is a simple, lightweight productivity app built with Next.js that
 - Streamlined Workflow: Add a board, add tasks, check them off—repeat. No drag-and-drop, no due dates—just the essentials for productivity.
 
 ## Try It Out
-No installation needed! You can start using Peony Sessions right now at [peonysesh.co](https://www.peonysesh.co).
+No installation needed! You can start using Peony Sessions right now at [peonysesh.co](peonysesh-app.vercel.app).
 
 ## Technologies Used
 - Next.js: For building a fast and scalable web app
